@@ -1,0 +1,70 @@
+html {
+    background-color: pink;
+    font-family: Andale Mono, monospace;
+}
+
+input{
+    margin-top: 3.5px;
+}
+
+a:visited{
+    color: thistle;
+}
+
+a{
+    text-decoration: none;
+    color: pink;
+}
+
+h1, h2 {
+    text-align: center;
+    color: white;
+    -webkit-text-stroke: 1px hotpink;
+}
+
+h1{
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    padding-top: 10.5px;
+    font-size: 90px;
+    margin-bottom: -55px;
+}
+
+h2{
+    font-size: 45px;
+    padding-bottom: 11.5px;
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer {
+    background-color: rosybrown;
+    color: honeydew;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 87.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#header {
+    letter-spacing: 1px;
+    color: pink;
+    font-size: 25px;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.75;
+}
