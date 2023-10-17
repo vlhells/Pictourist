@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Pictourist | @ViewBag.Title</title>
+</head>
+<body>
+    <div id="header">
+        <a href="/Home/Index">Главная</a> | 
+        <a href="/Home/About">О проекте</a> | 
+        <a href="/Account/Register">Регистрация</a>
+    </div>
+
+    <h1>Pictourist</h1>
+    <h2>@ViewBag.Title</h2>
+    <div>
+        @RenderBody()
+    </div>
+
+    <footer>
+        <p>Pictourist since 2023.</p>
+    </footer>
+</body>
+</html>
