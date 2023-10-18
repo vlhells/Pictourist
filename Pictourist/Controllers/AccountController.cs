@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pictourist.Admin.Models;
 using Pictourist.ViewModels;
@@ -9,6 +10,37 @@ namespace Pictourist.Controllers
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(string OldPassword, string NewPassword)
+        {
+            User user = await _userManager.FindByNameAsync(User.Identity.Name);
+            IdentityResult result =
+                    await _userManager.ChangePasswordAsync(user, OldPassword, NewPassword);
+
+            var errors = String.Empty;
+
+            if (result.Succeeded)
+            {
+                return Content("Вы успешно сменили пароль.");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    errors += $"{error.Description}<br>";
+                }
+            }
+
+            return Content(errors);
+        }
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)

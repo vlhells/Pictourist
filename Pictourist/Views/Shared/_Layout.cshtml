@@ -10,6 +10,7 @@
     <div id="header">
         <a href="/Home/Index">Главная</a> | 
         <a href="/Home/About">О проекте</a> | 
+        <a href="/Account/ChangePassword">Изменить пароль</a> | 
         @if (User.Identity.IsAuthenticated)
         {
             <div>Вы вошли как @User.Identity.Name</div>

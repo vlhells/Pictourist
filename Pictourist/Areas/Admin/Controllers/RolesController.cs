@@ -75,6 +75,7 @@ namespace Pictourist.Admin.Controllers
 
             return NotFound();
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {

@@ -54,7 +54,7 @@ namespace Pictourist.Admin.Models
         //          _userPhotos = value.Split(';').ToList();
         //      }
 
-        private User()
+        public User()
         {
 
         }
