@@ -3,9 +3,9 @@
     ViewBag.Title = "Пользователи";
 }
 
-<a asp-action="Create">Добавить пользователя</a>
+<a asp-action="Create" class="centered">Добавить пользователя</a><br /><br />
 
-<table class="table">
+<table class="centered">
     <tr><th>Email</th><th>Логин</th><th>Дата рождения</th><th></th></tr>
     @foreach (var user in Model)
     {
