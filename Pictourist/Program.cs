@@ -12,6 +12,7 @@ namespace Pictourist
 		public static async Task Main()
 		{
 			//TODO:
+			// Custom required messsages, translate validation messages, 
 			// Styles,
 			// Friends,
 			// Upload and watch images.
