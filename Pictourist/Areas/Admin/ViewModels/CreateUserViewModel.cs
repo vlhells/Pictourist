@@ -1,9 +1,9 @@
 ﻿using Pictourist.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pictourist.ViewModels
+namespace Pictourist.Admin.ViewModels
 {
-    public class CreateUserViewModel: ViewModel
+    public class CreateUserViewModel : ViewModel
     {
         public override string Login { get; set; }
         public override string Password { get; set; }

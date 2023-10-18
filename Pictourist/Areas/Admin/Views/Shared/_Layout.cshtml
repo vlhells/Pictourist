@@ -8,30 +8,20 @@
 </head>
 <body>
     <div id="header">
-        <a href="/Home/Index">Главная</a> | 
-        <a href="/Home/About">О проекте</a> | 
+        <a href="/">Главная</a> |
+        <a href="/Admin/Users">Пользователи сайта</a> |
+        <a href="/Admin/Roles">Роли</a> |
         @if (User.Identity.IsAuthenticated)
         {
             <div>Вы вошли как @User.Identity.Name</div>
 
-            <form method="post" asp-controller="Account" asp-action="Logout">
+            <form method="post" asp-area="default" asp-controller="Account" asp-action="Logout">
                 <input type="submit" value="Выход" />
             </form>
-
-            if (User.IsInRole("Admin"))
-            {
-                <a href="/Admin">Админ-панель</a>;
-            }
-        }
-        else
-        {
-            <a href="/Account/Register">Регистрация</a>
-            <span> | </span>
-            <a href="/Account/Login">Войти</a>
         }
     </div>
 
-    <h1>Pictourist</h1>
+    <h1>Админ-панель Pictourist</h1>
     <h2>@ViewBag.Title</h2>
     <div>
         @RenderBody()

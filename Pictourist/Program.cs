@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Pictourist.Models;
+using Pictourist.Admin.Models;
 
 namespace Pictourist
 {
-	public class Program
+    public class Program
 	{
 		public static void Main()
 		{
@@ -34,7 +34,7 @@ namespace Pictourist
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapControllerRoute("admin", "{area:exists}/{controller=users}/{action=Index}/{id?}");
 				endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 			});
 

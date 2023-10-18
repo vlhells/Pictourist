@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Pictourist.Models;
-using Pictourist.ViewModels;
+using Pictourist.Admin.Models;
+using Pictourist.Admin.ViewModels;
 
-namespace Pictourist.Controllers
+namespace Pictourist.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         UserManager<User> _userManager;
@@ -49,7 +50,7 @@ namespace Pictourist.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Email = user.Email, Login=user.UserName, Birthdate = user.Birthdate };
+            EditUserViewModel model = new EditUserViewModel { Email = user.Email, Login = user.UserName, Birthdate = user.Birthdate };
             return View(model);
         }
 

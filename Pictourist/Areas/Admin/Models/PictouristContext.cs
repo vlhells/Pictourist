@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pictourist.Models
+namespace Pictourist.Admin.Models
 {
-	public class PictouristContext: IdentityDbContext<User>
-	{
-		//public DbSet<User> Users { get; set; }
+    public class PictouristContext : IdentityDbContext<User>
+    {
+        //public DbSet<User> Users { get; set; }
 
-		public PictouristContext(DbContextOptions<PictouristContext> options) : base(options) 
-		{
-			Database.EnsureCreated();
-		}
+        public PictouristContext(DbContextOptions<PictouristContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{
