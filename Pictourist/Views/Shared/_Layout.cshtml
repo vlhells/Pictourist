@@ -10,7 +10,20 @@
     <div id="header">
         <a href="/Home/Index">Главная</a> | 
         <a href="/Home/About">О проекте</a> | 
-        <a href="/Account/Register">Регистрация</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>Вы вошли как @User.Identity.Name</div>
+
+            <form method="post" asp-controller="Account" asp-action="Logout">
+                <input type="submit" value="Выход" />
+            </form>
+        }
+        else
+        {
+            <a href="/Account/Register">Регистрация</a>
+            <span> | </span>
+            <a href="/Account/Login">Войти</a>
+        }
     </div>
 
     <h1>Pictourist</h1>

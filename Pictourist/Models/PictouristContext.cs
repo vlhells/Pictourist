@@ -12,9 +12,11 @@ namespace Pictourist.Models
 			Database.EnsureCreated();
 		}
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			
-		}
-	}
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<User>()
+        //    .Metadata.FindNavigation(nameof(User.UserPhotos))
+        //    .SetPropertyAccessMode(PropertyAccessMode.Field);
+        //}
+    }
 }

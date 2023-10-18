@@ -14,44 +14,62 @@ namespace Pictourist.Models
 
 		//public Birthdate Birthdate { get; private set; }
 		public string Birthdate { get; private set; }
-		public List<User> Friends { get; private set; }
-		private List<string> _userPhotos { get; set; }
-		public IReadOnlyCollection<string> UserPhotos => _userPhotos.AsReadOnly();
 
-		public void AddFriend(User user)
-		{
-			Friends.Add(user);
-		}
+		//private List<string> _friends;
+
+		//public string Friends
+		//{
+		//	get
+		//	{
+  //              return String.Join(';', _friends);
+  //          }
+		//	private set
+		//	{
+                
+  //          }
+		//}
+
+		//private List<string> _userPhotos;
+
+		//public string UserPhotos
+		//{
+		//	get
+		//	{
+  //              return String.Join(';', _userPhotos);
+  //          }
+		//	private set
+		//	{
+
+		//	}
+		//}
+
+		//public void AddFriend(string id)
+		//{
+  //          _friends = id.Split(';').ToList();
+  //      }
+
+		//public void AddPhoto()
+		//{
+  //          _userPhotos = value.Split(';').ToList();
+  //      }
 
 		private User()
 		{
 
 		}
 
-		public User(RegisterViewModel model)
+		public User(ViewModel model)
 		{
-			_userPhotos = new List<string>();
-			Friends = new List<User>();
-			Birthdate = model.Birthdate.ToString();
+			//_userPhotos = new List<string>();
+			//_friends = new List<string>();
+			Birthdate = model.Birthdate;
 			Email = model.Email;
 			UserName = model.Login;
 		}
 
-		public void SetBirthdate(string date)
+		public void SetBirthdate(string birthdate)
 		{
-			////Regex
-			////string[] day_month_year = date.Split('.'); // 01.01.2001
-
-			////if (day_month_year.Count() == 3 && String.IsNumer)
-			////{
-			////	Birthdate = new Birthdate(date);
-			////}
-
-			//string pattern = "[0-3][0-9].[";
-			//if (Regex.IsMatch(date, pattern))
-			//{
-			//	Birthdate = new Birthdate(date);
-			//}
+			Birthdate = birthdate;
 		}
 	}
 

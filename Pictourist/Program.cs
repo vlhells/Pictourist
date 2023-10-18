@@ -18,7 +18,7 @@ namespace Pictourist
 
 			builder.Services.AddDbContext<PictouristContext>(options => options.UseNpgsql(connection));
 
-			builder.Services.AddIdentity<User, IdentityRole>()
+			builder.Services.AddIdentity<User, IdentityRole>(opts => opts.User.RequireUniqueEmail = true)
 				.AddEntityFrameworkStores<PictouristContext>();
 
 			builder.Services.AddMvc();
