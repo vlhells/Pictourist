@@ -33,10 +33,12 @@ namespace Pictourist.Controllers
             }
             else
             {
-                foreach (var error in result.Errors)
-                {
-                    errors += $"{error.Description}<br>";
-                }
+                //ModelState.AddModelError(string.Empty, "Неверный пароль");
+                //foreach (var error in result.Errors)
+                //{
+                //    errors += $"{error.Description}<br>";
+                //}
+                errors += "Неверный пароль";
             }
 
             return Content(errors);

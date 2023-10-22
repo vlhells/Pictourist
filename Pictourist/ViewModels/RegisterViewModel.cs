@@ -9,14 +9,14 @@ namespace Pictourist.ViewModels
 	
 		public override string Password { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = $"{_errorMessage}")]
 		[Compare("Password", ErrorMessage = "Пароли не совпадают")]
 		[DataType(DataType.Password)]
 		[Display(Name = "Подтвердить пароль")]
 		public string PasswordConfirm { get; set; }
-		[Required]
-		public override string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = $"{_errorMessage}")]
+        public override string Email { get; set; }
+        [Required(ErrorMessage = $"{_errorMessage}")]
         public override string Birthdate { get; set; }
     }
 }

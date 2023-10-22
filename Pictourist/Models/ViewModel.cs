@@ -5,10 +5,12 @@ namespace Pictourist.Models
 {
     public abstract class ViewModel
     {
-        [Required]
+        private protected const string _errorMessage = "Поле обязательно для ввода";
+
+        [Required(ErrorMessage = $"{_errorMessage}")]
         [Display(Name = "Логин:")]
         public abstract string Login { get; set; }
-        [Required]
+        [Required(ErrorMessage = $"{_errorMessage}")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль:")]
         public abstract string Password { get; set; }

@@ -12,7 +12,6 @@ namespace Pictourist
 		public static async Task Main()
 		{
 			//TODO:
-			// Custom required messsages, translate validation messages, 
 			// Styles,
 			// Friends,
 			// Upload and watch images.
@@ -27,12 +26,19 @@ namespace Pictourist
 
 			builder.Services.AddDbContext<PictouristContext>(options => options.UseNpgsql(connection));
 
-			builder.Services.AddIdentity<User, IdentityRole>(opts => opts.User.RequireUniqueEmail = true)
-				.AddEntityFrameworkStores<PictouristContext>();
+            builder.Services.AddTransient<IUserValidator<User>, MyUserValidator>();
+
+			//builder.Services.AddTransient<IPasswordValidator<User>, MyPasswordValidator>();
+
+            builder.Services.AddIdentity<User, IdentityRole>(opts =>
+			{
+				opts.User.RequireUniqueEmail = true;
+			})
+			.AddEntityFrameworkStores<PictouristContext>();
 
 			builder.Services.AddMvc();
 
-			var app = builder.Build();
+            var app = builder.Build();
 
 			app.UseStaticFiles();
 
