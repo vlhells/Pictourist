@@ -9,22 +9,25 @@ namespace Pictourist.Areas.Admin.Services
         {
             List<IdentityError> errors = new List<IdentityError>();
 
-            if (manager.Users.Any(u => u.Email == user.Email))
+            if (user.UserName != "Admin")
             {
-                errors.Add(new IdentityError
+                if (manager.Users.Any(u => u.Email == user.Email))
                 {
-                    Description = "Пользователь с таким Email уже зарегистрирован."
-                });
-            }
+                    errors.Add(new IdentityError
+                    {
+                        Description = "Пользователь с таким Email уже зарегистрирован."
+                    });
+                }
 
-            if (manager.Users.Any(u => u.UserName == user.UserName))
-            {
-                errors.Add(new IdentityError
+                if (manager.Users.Any(u => u.UserName == user.UserName))
                 {
-                    Description = "Пользователь с таким логином уже зарегистрирован."
-                });
+                    errors.Add(new IdentityError
+                    {
+                        Description = "Пользователь с таким логином уже зарегистрирован."
+                    });
+                }
             }
-
+            
             return Task.FromResult(errors.Count == 0 ?
                 IdentityResult.Success : IdentityResult.Failed(errors.ToArray()));
         }

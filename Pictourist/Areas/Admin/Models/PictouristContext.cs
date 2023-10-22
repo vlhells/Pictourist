@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Pictourist.Areas.Admin.Models;
 
 namespace Pictourist.Admin.Models
 {
     public class PictouristContext : IdentityDbContext<User>
     {
-        //public DbSet<User> Users { get; set; }
+        public DbSet<Friend> Friends { get; set; }
 
         public PictouristContext(DbContextOptions<PictouristContext> options) : base(options)
         {
