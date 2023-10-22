@@ -29,7 +29,8 @@ namespace Pictourist.Controllers
 
             if (result.Succeeded)
             {
-                return Content("Вы успешно сменили пароль.");
+
+                return Ok("Вы успешно сменили пароль.");
             }
             else
             {
@@ -75,6 +76,7 @@ namespace Pictourist.Controllers
                     ModelState.AddModelError("", "Неверный логин и (или) пароль");
                 }
             }
+
             return View(model);
         }
 

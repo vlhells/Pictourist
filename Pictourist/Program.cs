@@ -14,6 +14,7 @@ namespace Pictourist
 			//TODO:
 			// Friends,
 			// Upload and watch images.
+
 			// Refactor.
 
 			var builder = WebApplication.CreateBuilder();
@@ -38,6 +39,8 @@ namespace Pictourist
 			builder.Services.AddMvc();
 
             var app = builder.Build();
+
+			app.UseStatusCodePages();
 
 			app.UseStaticFiles();
 
