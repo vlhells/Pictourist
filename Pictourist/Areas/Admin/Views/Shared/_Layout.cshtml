@@ -10,13 +10,13 @@
     <div id="header">
         <a href="/">Главная</a> |
         <a href="/Admin/Users">Пользователи сайта</a> |
-        <a href="/Admin/Roles">Роли</a> |
+        <a href="/Admin/Roles">Роли</a>
         @if (User.Identity.IsAuthenticated)
         {
-            <div>Вы вошли как @User.Identity.Name</div>
+            <div id="uAreLoginedAsText">Вы вошли как @User.Identity.Name</div>
 
             <form method="post" asp-area="default" asp-controller="Account" asp-action="Logout">
-                <input type="submit" value="Выход" />
+                <input type="submit" id="exitButton" value="Выход" />
             </form>
         }
     </div>

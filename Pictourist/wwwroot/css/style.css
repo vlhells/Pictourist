@@ -3,6 +3,31 @@ html {
     font-family: Andale Mono, monospace;
 }
 
+#exitButton {
+    position: absolute; 
+    right: 5px;
+    bottom: 5px;
+}
+
+#uAreLoginedAsText {
+    position: absolute; 
+    right: 5px;
+    top: 20%;
+}
+
+#changePasswordUser {
+    position: absolute;
+    font-size: 20px;
+    right: 65px;
+    bottom: 5px;
+}
+
+#adminPanel {
+    position: absolute;
+    left: 35px;
+    top: 25%;
+}
+
 input{
     margin-top: 3.5px;
 }

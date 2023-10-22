@@ -9,20 +9,20 @@
 <body>
     <div id="header">
         <a href="/Home/Index">Главная</a> | 
-        <a href="/Home/About">О проекте</a> | 
+        <a href="/Home/About">О проекте</a>
         
         @if (User.Identity.IsAuthenticated)
         {
-            <a href="/Account/ChangePassword">Изменить пароль</a><span> | </span> 
-            <div>Вы вошли как @User.Identity.Name</div>
+            <a href="/Account/ChangePassword" id="changePasswordUser">Изменить пароль</a>
+            <div id="uAreLoginedAsText">Вы вошли как @User.Identity.Name</div>
 
             <form method="post" asp-controller="Account" asp-action="Logout">
-                <input type="submit" value="Выход" />
+                <input type="submit" id="exitButton" value="Выход" />
             </form>
 
             if (User.IsInRole("Admin"))
             {
-                <a href="/Admin">Админ-панель</a>;
+                <a href="/Admin" id="adminPanel">Админ-панель</a>;
             }
         }
         else

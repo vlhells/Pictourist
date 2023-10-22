@@ -12,7 +12,6 @@ namespace Pictourist
 		public static async Task Main()
 		{
 			//TODO:
-			// Styles,
 			// Friends,
 			// Upload and watch images.
 			// Refactor.
