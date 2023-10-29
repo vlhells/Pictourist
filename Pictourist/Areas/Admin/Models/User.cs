@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Pictourist.Models;
-using Pictourist.ViewModels;
-using System.Text.RegularExpressions;
 
-namespace Pictourist.Admin.Models
+namespace Pictourist.Areas.Admin.Models
 {
     public class User : IdentityUser
     {
@@ -15,6 +13,8 @@ namespace Pictourist.Admin.Models
 
         //public Birthdate Birthdate { get; private set; }
         public string Birthdate { get; private set; }
+
+        public List<User> Friends { get; } = new();
 
         //private List<string> _friends;
 

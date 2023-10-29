@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Pictourist.Admin.ViewModels
+namespace Pictourist.Areas.Admin.ViewModels
 {
     public class ChangeRoleViewModel
     {

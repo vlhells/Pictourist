@@ -1,7 +1,7 @@
 ﻿using Pictourist.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pictourist.Admin.ViewModels
+namespace Pictourist.Areas.Admin.ViewModels
 {
     public class EditUserViewModel : ViewModel
     {

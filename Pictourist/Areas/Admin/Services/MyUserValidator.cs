@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Pictourist.Admin.Models;
+using Pictourist.Areas.Admin.Models;
 
 namespace Pictourist.Areas.Admin.Services
 {

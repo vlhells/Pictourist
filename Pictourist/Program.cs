@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Pictourist.Admin.Models;
+using Pictourist.Areas.Admin.Models;
 using Pictourist.Areas.Admin.Services;
 
 namespace Pictourist

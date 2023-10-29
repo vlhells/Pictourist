@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Pictourist.Admin.Models;
+using Pictourist.Areas.Admin.Models;
 using Pictourist.ViewModels;
 
 namespace Pictourist.Controllers

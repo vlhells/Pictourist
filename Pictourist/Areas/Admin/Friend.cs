@@ -1,9 +1,15 @@
-﻿namespace Pictourist.Areas.Admin.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Pictourist.Areas.Admin
 {
     public class Friend
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        //[ForeignKey("UserId")]
         public string FirstFriendId { get; set; }
+        //[ForeignKey("UserId")]
         public string SecondFriendId { get; set; }
         public byte RelationType { get; set; } // 1 -- первый отправил заявку второму, -1 -- второй, 0 -- друзья.
     }

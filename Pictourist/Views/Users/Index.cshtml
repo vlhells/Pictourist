@@ -1,0 +1,36 @@
+﻿﻿@using Pictourist.Areas.Admin.Models;
+
+@model IEnumerable<User>
+
+@{
+	ViewBag.Title = "Другие пользователи сайта";
+}
+
+<table class="centered">
+	<tr><th>Имя пользователя</th><th>Возраст</th></tr>
+	@foreach (var item in Model)
+	{
+		if (item.UserName == User.Identity.Name)
+			continue;
+
+		<tr>
+			<td>@item.UserName</td>
+			<td>@((DateTime.Now.Year - DateOnly.Parse(item.Birthdate).Year))</td>
+			<td>
+				@{
+					var authedUser = Model.FirstOrDefault(u => u.UserName == User.Identity.Name);
+					var thisFromList = Model.FirstOrDefault(t => t.Id == item.Id);
+
+					if (authedUser.Friends.Contains(thisFromList)) // not works. TODO: 
+					{
+						<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Удалить из друзей</a>
+					}
+					else
+					{
+						<a asp-action="AddFriend" asp-controller="Friends" asp-route-id="@item.Id">Добавить в друзья</a>
+					}
+				}
+			</td>
+		</tr>
+	}
+</table>

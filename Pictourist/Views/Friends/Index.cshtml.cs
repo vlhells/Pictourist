@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Pictourist.Areas.Admin.Views.Users
+namespace Pictourist.Views.Friends
 {
     public class IndexModel : PageModel
     {
