@@ -15,8 +15,17 @@ namespace Pictourist.Controllers
 			this.db = db;
 		}
 
-		public async Task<IActionResult> Index(string? Id) // Friends/Index/Friend1, etc...
+		public async Task<IActionResult> Index(string? Id) // "Friends/Index/Friend1", etc...
 		{
+			if (Id != null)
+			{
+				User u = db.Users.FirstOrDefault(x => x.Id == Id);
+				if (u != null)
+				{
+					return View("~/Views/Users/UsersPersonalPage.cshtml", u);
+				}
+			}
+
 			var authedUser = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.UserName == User.Identity.Name); 
 
 			return View(await db.Users.Include(u => u.Friends).

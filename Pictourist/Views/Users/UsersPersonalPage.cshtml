@@ -1,0 +1,13 @@
+﻿﻿@using Pictourist.Areas.Admin.Models;
+
+@model User;
+@{
+
+}
+
+<div class="centered">
+	<p>Привет! Мой никнейм — @Model.UserName</p>
+	<p>Мне @((DateTime.Now.Year - DateOnly.Parse(Model.Birthdate).Year)).</p>
+	<br />
+	<p>Я хочу поделиться этими фотографиями:</p>
+</div>

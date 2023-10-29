@@ -15,11 +15,11 @@
 	else
 	{
 			<table>
-				<tr><th>Имя пользователя</th><th>Возраст</th></tr>
+				<tr><th>Имя пользователя (click)</th><th>Возраст</th></tr>
 				@foreach (var item in Model)
 				{
 					<tr>
-						<td>@item.UserName</td>
+						<td><a asp-action="Index" asp-controller="Friends" asp-route-id="@item.Id">@item.UserName</a></td>
 						<td>@((DateTime.Now.Year - DateOnly.Parse(item.Birthdate).Year))</td>
 						<td>
 							<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Удалить из друзей</a>
