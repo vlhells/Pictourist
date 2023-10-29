@@ -7,27 +7,85 @@
 }
 
 <div class="centered">
-@{
-	if (Model.Count() == 0)
-	{
-		<p>У Вас пока нет друзей с нашего сайта.<br />Вы можете добавить друзей в разделе "Найти друзей!":)</p>
+	@{
+		if (Model.Count() == 0)
+		{
+			<p>У Вас пока нет друзей с нашего сайта.<br />Вы можете добавить друзей в разделе "Найти друзей!":)</p>
+		}
+		else
+		{
+			var authedUser = Model.FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+			var myFriends = from u in Model // передаем каждый элемент из people в переменную u
+							where (u.Friends.Contains(authedUser) && authedUser.Friends.Contains(u))
+							select u;
+			if (myFriends.Count() != 0)
+			{
+				<table>
+					<tr><th>Имя пользователя (click)</th><th>Возраст</th></tr>
+					@foreach (var item in myFriends)
+					{
+						<tr>
+							<td><a asp-action="Index" asp-controller="Friends" asp-route-id="@item.Id">@item.UserName</a></td>
+							<td>@(
+							(DateTime.Now.Year - DateOnly.Parse(item.Birthdate).Year)
+							)</td>
+							<td>
+								<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Удалить из друзей</a>
+							</td>
+						</tr>
+					}
+				</table>
+			}
+
+			var imDesire = from u in Model
+									where (authedUser.Friends.Contains(u) && !u.Friends.Contains(authedUser))
+									select u;
+			if (imDesire.Count() != 0)
+			{
+				<h2>Исходящие заявки в друзья</h2>
+				<table>
+					<tr><th>Имя пользователя (click)</th><th>Возраст</th></tr>
+					@foreach (var item in imDesire)
+					{
+						<tr>
+							<td><a asp-action="Index" asp-controller="Friends" asp-route-id="@item.Id">@item.UserName</a></td>
+							<td>@(
+							(DateTime.Now.Year - DateOnly.Parse(item.Birthdate).Year)
+							)</td>
+							<td>
+								<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Отменить заявку</a>
+							</td>
+						</tr>
+					}
+				</table>
+			}
+
+			var imDesiredBy = from u in Model
+							where (u.Friends.Contains(authedUser) & !authedUser.Friends.Contains(u))
+							select u;
+			if (imDesiredBy.Count() != 0)
+			{
+				<h2>Входящие заявки в друзья</h2>
+				<table>
+					<tr><th>Имя пользователя (click)</th><th>Возраст</th></tr>
+					@foreach (var item in imDesiredBy)
+					{
+						<tr>
+							<td><a asp-action="Index" asp-controller="Friends" asp-route-id="@item.Id">@item.UserName</a></td>
+							<td>
+								@(
+								(DateTime.Now.Year - DateOnly.Parse(item.Birthdate).Year)
+									)
+							</td>
+							<td>
+								<a asp-action="AddFriend" asp-controller="Friends" asp-route-id="@item.Id">Принять в друзья</a>
+							</td>
+						</tr>
+					}
+				</table>
+			}
+		}
 	}
-	else
-	{
-			<table>
-				<tr><th>Имя пользователя (click)</th><th>Возраст</th></tr>
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td><a asp-action="Index" asp-controller="Friends" asp-route-id="@item.Id">@item.UserName</a></td>
-						<td>@((DateTime.Now.Year - DateOnly.Parse(item.Birthdate).Year))</td>
-						<td>
-							<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Удалить из друзей</a>
-						</td>
-					</tr>
-				}
-			</table>
-	}
-}
 </div>
 

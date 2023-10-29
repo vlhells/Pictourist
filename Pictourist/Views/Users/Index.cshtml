@@ -21,9 +21,13 @@
 					var authedUser = Model.FirstOrDefault(u => u.UserName == User.Identity.Name);
 					var thisFromList = Model.FirstOrDefault(t => t.Id == item.Id);
 
-					if (authedUser.Friends.Contains(thisFromList)) 
+					if (authedUser.Friends.Contains(thisFromList) && thisFromList.Friends.Contains(authedUser)) 
 					{
 						<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Удалить из друзей</a>
+					}
+					else if (authedUser.Friends.Contains(thisFromList))
+					{
+						<a asp-action="RemoveFriend" asp-controller="Friends" asp-route-id="@item.Id">Отменить заявку в друзья</a>
 					}
 					else
 					{

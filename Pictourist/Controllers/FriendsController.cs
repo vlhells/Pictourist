@@ -17,19 +17,19 @@ namespace Pictourist.Controllers
 
 		public async Task<IActionResult> Index(string? Id) // "Friends/Index/Friend1", etc...
 		{
+			var authedUser = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.UserName == User.Identity.Name);
+
 			if (Id != null)
 			{
-				User u = db.Users.FirstOrDefault(x => x.Id == Id);
-				if (u != null)
+				User u = db.Users.Include(u => u.Friends).FirstOrDefault(x => x.Id == Id);
+				if (u != null && u.Friends.Contains(authedUser))
 				{
 					return View("~/Views/Users/UsersPersonalPage.cshtml", u);
 				}
 			}
 
-			var authedUser = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.UserName == User.Identity.Name); 
-
 			return View(await db.Users.Include(u => u.Friends).
-				Where(u => (u.Friends.Contains(authedUser) && authedUser.Friends.Contains(u))).
+				/*Where(u => (u.Friends.Contains(authedUser) && authedUser.Friends.Contains(u)))*/
 				ToListAsync());
 		}
 

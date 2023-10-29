@@ -20,5 +20,11 @@ namespace Pictourist.Controllers
 		{
 			return View(await db.Users.Include(u => u.Friends).ToListAsync());
 		}
+
+		public IActionResult MyPage()
+		{
+			User u = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+			return View("UsersPersonalPage", u);
+		}
 	}
 }
