@@ -6,8 +6,10 @@ namespace Pictourist.ViewModels
 	public class RegisterViewModel: ViewModel
     {
 		public override string Login { get; set; }
-	
-		public override string Password { get; set; }
+
+        [Required(ErrorMessage = $"{_errorMessage}")]
+        [DataType(DataType.Password)]
+        public override string Password { get; set; }
 
 		[Required(ErrorMessage = $"{_errorMessage}")]
 		[Compare("Password", ErrorMessage = "Пароли не совпадают")]

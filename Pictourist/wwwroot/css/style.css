@@ -9,6 +9,24 @@ html {
     bottom: 5px;
 }
 
+#registryText {
+    position: absolute;
+    right: 95px;
+    top: 27.5%;
+}
+
+#stickBetweenRegAndLogin {
+    position: absolute;
+    right: 79px;
+    top: 27.5%;
+}
+
+#log-in {
+    position: absolute;
+    right: 5px;
+    top: 27.5%;
+}
+
 #uAreLoginedAsText {
     position: absolute; 
     right: 5px;

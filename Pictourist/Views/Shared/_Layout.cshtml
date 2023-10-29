@@ -9,11 +9,14 @@
 <body>
     <div id="header">
         <a href="/Home/Index">Главная</a> | 
-        <a href="/Home/About">О проекте</a> |
+        <a href="/Home/About">О проекте</a>
         
         @if (User.Identity.IsAuthenticated)
         {
-            <a href="/Users/Index">Другие пользователи сайта</a>
+            <span> | </span>
+            <a href="/Users/Index">Найти друзей!</a>
+            <span> | </span>
+            <a href="/Friends/Index">Мои друзья</a>
             <a href="/Account/ChangePassword" id="changePasswordUser">Изменить пароль</a>
             <div id="uAreLoginedAsText">Вы вошли как @User.Identity.Name</div>
 
@@ -28,10 +31,9 @@
         }
         else
         {
-            <span> | </span>
-            <a href="/Account/Register">Регистрация</a>
-            <span> | </span>
-            <a href="/Account/Login">Войти</a>
+            <a href="/Account/Register" id="registryText">Регистрация</a>
+            <span id="stickBetweenRegAndLogin"> | </span>
+            <a href="/Account/Login" id="log-in">Войти</a>
         }
     </div>
 

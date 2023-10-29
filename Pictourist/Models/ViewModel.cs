@@ -10,10 +10,9 @@ namespace Pictourist.Models
         [Required(ErrorMessage = $"{_errorMessage}")]
         [Display(Name = "Логин:")]
         public abstract string Login { get; set; }
-        [Required(ErrorMessage = $"{_errorMessage}")]
-        [DataType(DataType.Password)]
+        
         [Display(Name = "Пароль:")]
-        public abstract string Password { get; set; }
+        public virtual string? Password { get; set; }
 
         [Display(Name = "Email:")]
         public virtual string? Email { get; set; }

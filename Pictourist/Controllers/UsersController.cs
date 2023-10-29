@@ -18,7 +18,7 @@ namespace Pictourist.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			return View(await db.Users.ToListAsync());
+			return View(await db.Users.Include(u => u.Friends).ToListAsync());
 		}
 	}
 }

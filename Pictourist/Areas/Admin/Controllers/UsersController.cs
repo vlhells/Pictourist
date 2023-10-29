@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pictourist.Areas.Admin.Models;
+using Pictourist.Areas.Admin.Services;
 using Pictourist.Areas.Admin.ViewModels;
 
 namespace Pictourist.Admin.Controllers
@@ -111,10 +112,13 @@ namespace Pictourist.Admin.Controllers
                 if (user != null)
                 {
                     user.Email = model.Email;
-                    user.UserName = model.Email;
+                    user.UserName = model.Login;
                     user.SetBirthdate(model.Birthdate);
 
+                    _userManager.UserValidators.Clear();
                     var result = await _userManager.UpdateAsync(user);
+                    _userManager.UserValidators.Add(new MyUserValidator());
+
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index");

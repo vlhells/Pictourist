@@ -8,6 +8,8 @@ namespace Pictourist.ViewModels
     {
         public override string Login { get; set; }
 
+        [Required(ErrorMessage = $"{_errorMessage}")]
+        [DataType(DataType.Password)]
         public override string Password { get; set; }
 
         [Display(Name = "Запомнить?")]

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Pictourist.Areas.Admin.Models;
 
 namespace Pictourist.Controllers
 {
+	[Authorize]
 	public class FriendsController : Controller
 	{
 		PictouristContext db;
@@ -12,9 +15,13 @@ namespace Pictourist.Controllers
 			this.db = db;
 		}
 
-		public IActionResult Index(string? Id) // Friends/Index/Friend1, etc...
+		public async Task<IActionResult> Index(string? Id) // Friends/Index/Friend1, etc...
 		{
-			return View();
+			var authedUser = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.UserName == User.Identity.Name); 
+
+			return View(await db.Users.Include(u => u.Friends).
+				Where(u => (u.Friends.Contains(authedUser) && authedUser.Friends.Contains(u))).
+				ToListAsync());
 		}
 
 		public IActionResult AddFriend(Guid Id)
@@ -27,21 +34,21 @@ namespace Pictourist.Controllers
 
 			db.SaveChangesAsync();
 
-			return Content($"Вы отправили заявку на подписку на обновления {wanted.UserName}.<br>Когда пользователь её примет," +
+			return Ok($"Вы отправили заявку на подписку на обновления {wanted.UserName}.<br>Когда пользователь её примет," +
 				$"Вы сможете просматривать его фотографии.");
 		}
 
 		public IActionResult RemoveFriend(Guid Id)
 		{
-			var follower = db.Users.FirstOrDefault(f => f.UserName == User.Identity.Name);
+			var follower = db.Users.Include(u => u.Friends).FirstOrDefault(f => f.UserName == User.Identity.Name);
 
-			var wanted = db.Users.FirstOrDefault(u => u.Id == Id.ToString());
+			var wanted = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == Id.ToString());
 
 			follower.Friends.Remove(wanted);
 
 			db.SaveChangesAsync();
 
-			return Content($"Вы успешно отписались от обновлений {wanted.UserName}");
+			return Ok($"Вы успешно отписались от обновлений {wanted.UserName}");
 		}
 	}
 }
