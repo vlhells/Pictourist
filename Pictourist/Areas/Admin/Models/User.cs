@@ -16,6 +16,8 @@ namespace Pictourist.Areas.Admin.Models
 
         public List<User> Friends { get; } = new();
 
+        //public List<string> PicturesPaths { get; } = new List<string>();
+
         //private List<string> _friends;
 
         //public string Friends

@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Pictourist.Areas.Admin.Models;
 using Pictourist.Areas.Admin.Services;
+using Pictourist.Services;
 
 namespace Pictourist
 {
@@ -12,25 +11,42 @@ namespace Pictourist
 		public static async Task Main()
 		{
 			//TODO:
-			// Friends,
-			// Upload and watch images.
+			// Friends-AJAX.
+			// Swagger.
+			// README.
+			// Docker.
+			// Tests.
 
-			// Refactor.
+			// Upload and watch images.
+			//Chattin w/ Signal(?)
+			//Likes/Comms.
+
+			//Refactor.
 
 			var builder = WebApplication.CreateBuilder();
 
-			string connection = builder.Configuration.GetConnectionString("EfCoreBasicDatabase");
+			string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 			//builder.Services.AddDbContext<PictouristContext>(options =>
 			//	options.UseSqlServer(connection));
+
+			builder.Services.AddSwaggerGen();
 
 			builder.Services.AddDbContext<PictouristContext>(options => options.UseNpgsql(connection));
 
             builder.Services.AddTransient<IUserValidator<User>, MyUserValidator>();
 
+			builder.Services.AddScoped<IFriendsService, FriendsService>();
+			builder.Services.AddScoped<IAccountService, AccountService>();
+			builder.Services.AddScoped<IRolesService, RolesService>();
+			builder.Services.AddScoped<Pictourist.Areas.Admin.Services.IUsersService, 
+										Pictourist.Areas.Admin.Services.UsersService>();
+			builder.Services.AddScoped<Pictourist.Services.IUsersService,
+							Pictourist.Services.UsersService>();
+
 			//builder.Services.AddTransient<IPasswordValidator<User>, MyPasswordValidator>();
 
-            builder.Services.AddIdentity<User, IdentityRole>(opts =>
+			builder.Services.AddIdentity<User, IdentityRole>(opts =>
 			{
 				opts.User.RequireUniqueEmail = true;
 			})
@@ -43,6 +59,9 @@ namespace Pictourist
 			app.UseStatusCodePages();
 
 			app.UseStaticFiles();
+
+			app.UseSwagger();
+			app.UseSwaggerUI();
 
 			app.UseRouting();
 

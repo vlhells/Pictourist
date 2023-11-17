@@ -2,14 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pictourist.Areas.Admin.Models;
+using Pictourist.Services;
 using Pictourist.ViewModels;
 
 namespace Pictourist.Controllers
 {
     public class AccountController : Controller
 	{
-		private readonly UserManager<User> _userManager;
-		private readonly SignInManager<User> _signInManager;
+        private IAccountService _accountService;
+
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
 
         [Authorize]
         [HttpGet]
@@ -19,17 +24,14 @@ namespace Pictourist.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(string OldPassword, string NewPassword)
+        public async Task<IActionResult> ChangePasswordAsync(string OldPassword, string NewPassword)
         {
-            User user = await _userManager.FindByNameAsync(User.Identity.Name);
-            IdentityResult result =
-                    await _userManager.ChangePasswordAsync(user, OldPassword, NewPassword);
+            var errors = string.Empty;
 
-            var errors = String.Empty;
+			var result = await _accountService.ChangePasswordAsync(User.Identity.Name, OldPassword, NewPassword);
 
-            if (result.Succeeded)
+			if (result.Succeeded)
             {
-
                 return Ok("Вы успешно сменили пароль.");
             }
             else
@@ -53,12 +55,12 @@ namespace Pictourist.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> LoginAsync(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var result =
-                    await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
+                    await _accountService.LoginAsync(model);
                 if (result.Succeeded)
                 {
                     // Принадлежит ли URL приложению.
@@ -82,18 +84,11 @@ namespace Pictourist.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
-            // Удаление аутен. куки.
-            await _signInManager.SignOutAsync();
+            await _accountService.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
-		{
-			_userManager = userManager;
-			_signInManager = signInManager;
-		}
 
 		[HttpGet]
 		public IActionResult Register()
@@ -102,16 +97,13 @@ namespace Pictourist.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Register(RegisterViewModel model)
+		public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				User user = new User(model);
-				var result = await _userManager.CreateAsync(user, model.Password);
-				if (result.Succeeded)
+				var result = await _accountService.RegisterAsync(model);
+				if (result != null)
 				{
-					// cookies:
-					await _signInManager.SignInAsync(user, false);
 					return RedirectToAction("Index", "Home");
 				}
 				else

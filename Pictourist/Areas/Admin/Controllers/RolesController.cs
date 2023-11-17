@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pictourist.Areas.Admin.Models;
-using Pictourist.Areas.Admin.ViewModels;
+using Pictourist.Areas.Admin.Services;
 
 namespace Pictourist.Admin.Controllers
 {
@@ -10,66 +10,48 @@ namespace Pictourist.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
-        private RoleManager<IdentityRole> _roleManager;
-        private UserManager<User> _userManager;
+        private IRolesService _rolesService;
 
-        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public RolesController(IRolesService rolesService)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
+            _rolesService = rolesService;
         }
-        public IActionResult Index() => View(_roleManager.Roles.ToList());
+        public async Task<IActionResult> IndexAsync() => View(await _rolesService.IndexAsync());
 
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> CreateAsync(string name)
         {
-            if (!string.IsNullOrEmpty(name))
-            {
-                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
-            }
-            return View(name);
+			IdentityResult result = await _rolesService.CreateAsync(name);
+			if (result.Succeeded)
+			{
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				foreach (var error in result.Errors)
+				{
+					ModelState.AddModelError(string.Empty, error.Description);
+				}
+			}
+			return View(name);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
-            IdentityRole role = await _roleManager.FindByIdAsync(id);
-            if (role != null)
-            {
-                IdentityResult result = await _roleManager.DeleteAsync(role);
-            }
+            await _rolesService.DeleteAsync(id);
             return RedirectToAction("Index");
         }
 
-        public IActionResult UserList() => View(_userManager.Users.ToList());
+        public async Task<IActionResult> UserList() => View(await _rolesService.UserList());
 
-        public async Task<IActionResult> Edit(string userId)
+        public async Task<IActionResult> EditAsync(string userId)
         {
-            User user = await _userManager.FindByIdAsync(userId);
-            if (user != null)
+            var model = await _rolesService.EditAsync(userId);
+            if (model != null)
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var allRoles = _roleManager.Roles.ToList();
-                ChangeRoleViewModel model = new ChangeRoleViewModel
-                {
-                    UserId = user.Id,
-                    UserEmail = user.Email,
-                    UserRoles = userRoles,
-                    AllRoles = allRoles
-                };
                 return View(model);
             }
 
@@ -77,20 +59,11 @@ namespace Pictourist.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string userId, List<string> roles)
+        public async Task<IActionResult> EditAsync(string userId, List<string> roles)
         {
-            User user = await _userManager.FindByIdAsync(userId);
+            User user = await _rolesService.EditAsync(userId, roles);
             if (user != null)
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var allRoles = _roleManager.Roles.ToList();
-                var addedRoles = roles.Except(userRoles);
-                var removedRoles = userRoles.Except(roles);
-
-                await _userManager.AddToRolesAsync(user, addedRoles);
-
-                await _userManager.RemoveFromRolesAsync(user, removedRoles);
-
                 return RedirectToAction("UserList");
             }
 

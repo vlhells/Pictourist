@@ -15,9 +15,13 @@ namespace Pictourist.Areas.Admin.Models
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
 			modelBuilder.Entity<User>()
 				.HasMany(e => e.Friends)
 				.WithMany();
+
+			//modelBuilder.Entity<User>()
+			//	.HasMany(e => e.PicturesPaths).WithOne();
 		}
 
 		//protected override void OnModelCreating(ModelBuilder builder)

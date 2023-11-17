@@ -2,29 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pictourist.Areas.Admin.Models;
+using Pictourist.Services;
 
 namespace Pictourist.Controllers
 {
 	[Authorize]
 	public class UsersController : Controller
 	{
-		PictouristContext db;
+		private IUsersService _usersService;
 
-		public UsersController(PictouristContext db)
+		public UsersController(IUsersService usersService)
 		{
-			this.db = db;
+			_usersService = usersService;
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> IndexAsync()
 		{
-			return View(await db.Users.Include(u => u.Friends).ToListAsync());
+			return View(await _usersService.IndexAsync());
 		}
 
-		public IActionResult MyPage()
+		public async Task<IActionResult> MyPageAsync()
 		{
-			User u = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
-			return View("UsersPersonalPage", u);
+			return View("UsersPersonalPage", await _usersService.MyPageAsync(User.Identity.Name));
 		}
 	}
 }

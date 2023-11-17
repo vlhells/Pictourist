@@ -2,62 +2,44 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pictourist.Areas.Admin.Models;
+using Pictourist.Services;
 
 namespace Pictourist.Controllers
 {
 	[Authorize]
 	public class FriendsController : Controller
 	{
-		PictouristContext db;
+		private IFriendsService _friendsService;
 
-		public FriendsController(PictouristContext db)
+		public FriendsController(IFriendsService friendsService)
 		{
-			this.db = db;
+			_friendsService = friendsService;
 		}
 
-		public async Task<IActionResult> Index(string? Id) // "Friends/Index/Friend1", etc...
+		public async Task<IActionResult> IndexAsync(string Id) // "Friends/Index/Friend1", etc...
 		{
-			var authedUser = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.UserName == User.Identity.Name);
-
-			if (Id != null)
+			User u = await _friendsService.IndexAsync(User.Identity.Name, Id);
+			if (u != null)
 			{
-				User u = db.Users.Include(u => u.Friends).FirstOrDefault(x => x.Id == Id);
-				if (u != null && u.Friends.Contains(authedUser))
-				{
-					return View("~/Views/Users/UsersPersonalPage.cshtml", u);
-				}
+				return View("~/Views/Users/UsersPersonalPage.cshtml", u);
 			}
 
-			return View(await db.Users.Include(u => u.Friends).
-				/*Where(u => (u.Friends.Contains(authedUser) && authedUser.Friends.Contains(u)))*/
-				ToListAsync());
+			return NoContent();
 		}
 
-		public IActionResult AddFriend(Guid Id)
+		public async Task<IActionResult> IndexAsync()
 		{
-			var follower = db.Users.FirstOrDefault(f => f.UserName == User.Identity.Name);
-
-			var wanted = db.Users.FirstOrDefault(u => u.Id == Id.ToString());
-
-			follower.Friends.Add(wanted);
-
-			db.SaveChangesAsync();
-
-			return Ok($"Вы отправили заявку на подписку на обновления {wanted.UserName}.<br>Когда пользователь её примет," +
-				$"Вы сможете просматривать его фотографии.");
+			return View(await _friendsService.IndexAsync());
 		}
 
-		public IActionResult RemoveFriend(Guid Id)
+		public async Task<IActionResult> AddFriendAsync(Guid Id)
 		{
-			var follower = db.Users.Include(u => u.Friends).FirstOrDefault(f => f.UserName == User.Identity.Name);
+			return Ok(await _friendsService.AddFriendAsync(User.Identity.Name, Id));
+		}
 
-			var wanted = db.Users.Include(u => u.Friends).FirstOrDefault(u => u.Id == Id.ToString());
-
-			follower.Friends.Remove(wanted);
-
-			db.SaveChangesAsync();
-
-			return Ok($"Вы успешно отписались от обновлений {wanted.UserName}");
+		public async Task<IActionResult> RemoveFriendAsync(Guid Id)
+		{
+			return Ok(await _friendsService.RemoveFriendAsync(User.Identity.Name, Id));
 		}
 	}
 }
