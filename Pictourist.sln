@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pictourist", "Pictourist\Pictourist.csproj", "{DA56A514-DEB5-4B52-B5BC-9C4CAC6E30CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Pictourist.Tests\UnitTests\UnitTests.csproj", "{48E88233-3D18-4C7D-B2AB-8B04AC2557E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Pictourist.Tests\UnitTests\UnitTests.csproj", "{48E88233-3D18-4C7D-B2AB-8B04AC2557E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pictourist.Tests", "Pictourist.Tests", "{C038FA2B-B7B6-4878-884D-FF4E9DEEAE6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48E88233-3D18-4C7D-B2AB-8B04AC2557E2} = {C038FA2B-B7B6-4878-884D-FF4E9DEEAE6C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {079741D7-F216-459A-A14B-373A8952EE2C}

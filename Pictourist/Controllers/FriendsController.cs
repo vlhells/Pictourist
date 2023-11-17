@@ -18,18 +18,20 @@ namespace Pictourist.Controllers
 
 		public async Task<IActionResult> IndexAsync(string Id) // "Friends/Index/Friend1", etc...
 		{
-			User u = await _friendsService.IndexAsync(User.Identity.Name, Id);
-			if (u != null)
+			if (Id == null)
 			{
-				return View("~/Views/Users/UsersPersonalPage.cshtml", u);
+				return View(await _friendsService.IndexAsync());
+			}
+			else
+			{
+				User u = await _friendsService.IndexAsync(User.Identity.Name, Id);
+				if (u != null)
+				{
+					return View("~/Views/Users/UsersPersonalPage.cshtml", u);
+				}
 			}
 
 			return NoContent();
-		}
-
-		public async Task<IActionResult> IndexAsync()
-		{
-			return View(await _friendsService.IndexAsync());
 		}
 
 		public async Task<IActionResult> AddFriendAsync(Guid Id)

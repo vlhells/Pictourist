@@ -13,7 +13,6 @@ namespace Pictourist
 			//TODO:
 			// Friends-AJAX.
 			// Swagger.
-			// README.
 			// Docker.
 			// Tests.
 
