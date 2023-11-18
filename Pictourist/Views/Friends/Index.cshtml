@@ -16,7 +16,7 @@
 		{
 			var authedUser = Model.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-			var myFriends = from u in Model // передаем каждый элемент из people в переменную u
+			var myFriends = from u in Model // Передаём каждый элемент из Model в переменную u.
 							where (u.Friends.Contains(authedUser) && authedUser.Friends.Contains(u))
 							select u;
 			if (myFriends.Count() != 0)
